@@ -44,6 +44,24 @@ jobs:
       - name: Run Ruff formatter check
         run: ruff format --check .
 
+  safety-scan:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          
+      - name: Install Safety
+        run: pip install safety
+        
+      - name: Run Safety check
+        run: safety check -r requirements.txt
+
   test:
     name: Test
     runs-on: ubuntu-latest
