@@ -1,0 +1,25 @@
+# docker-compose.production.yml
+
+services:
+
+  postgres:
+    # Asegura el reinicio automático si falla o el servidor se reinicia
+    restart: always
+    # Eliminamos cualquier mapeo al exterior
+    expose:
+      - "5432"
+
+  app-blue:
+    image: miquel03/sportsclub:latest
+    restart: always
+    # La aplicación Django ya está en la red interna (expose), por lo que no requiere cambios de puertos
+
+  app-green:
+    image: miquel03/sportsclub:latest
+    restart: always
+
+  nginx:
+    restart: always
+    ports:
+      # Solo NGINX está expuesto al mundo exterior en el puerto de host 80
+      - "80:80"
